@@ -10,6 +10,7 @@ import DesignTools from "./pages/DesignTools.jsx";
 import RegionalAdaptationTools from "./pages/RegionalAdaptationTools.jsx";
 import ContentUpdates from "./pages/ContentUpdates.jsx";
 import UserAuthentication from "./pages/UserAuthentication.jsx";
+import { AuthProvider } from './contexts/AuthContext';
 
 const queryClient = new QueryClient();
 
@@ -51,18 +52,20 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Index />} />
-              <Route path="educational-resources" element={<EducationalResources />} />
-              <Route path="design-tools" element={<DesignTools />} />
-              <Route path="regional-adaptation-tools" element={<RegionalAdaptationTools />} />
-              <Route path="content-updates" element={<ContentUpdates />} />
-              <Route path="user-authentication" element={<UserAuthentication />} />
-            </Route>
-          </Routes>
-        </Router>
+        <AuthProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Index />} />
+                <Route path="educational-resources" element={<EducationalResources />} />
+                <Route path="design-tools" element={<DesignTools />} />
+                <Route path="regional-adaptation-tools" element={<RegionalAdaptationTools />} />
+                <Route path="content-updates" element={<ContentUpdates />} />
+                <Route path="user-authentication" element={<UserAuthentication />} />
+              </Route>
+            </Routes>
+          </Router>
+        </AuthProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
