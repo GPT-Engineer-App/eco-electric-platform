@@ -45,6 +45,25 @@ const fromSupabase = async (query) => {
 | user_id    | int8        | number | true     |
 | created_at | timestamptz | string | true     |
 
+### product
+
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| name       | text        | string | true     |
+| price      | numeric     | number | true     |
+| created_at | timestamptz | string | true     |
+
+### order
+
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| product_id | int8        | number | true     |
+| user_id    | int8        | number | true     |
+| quantity   | int4        | number | true     |
+| created_at | timestamptz | string | true     |
+
 */
 
 // Hooks for event table
@@ -166,6 +185,88 @@ export const useDeleteRegistration = () => {
         mutationFn: (id) => fromSupabase(supabase.from('registration').delete().eq('id', id)),
         onSuccess: () => {
             queryClient.invalidateQueries('registrations');
+        },
+    });
+};
+
+// Hooks for product table
+export const useProducts = () => useQuery({
+    queryKey: ['products'],
+    queryFn: () => fromSupabase(supabase.from('product').select('*')),
+});
+
+export const useProduct = (id) => useQuery({
+    queryKey: ['product', id],
+    queryFn: () => fromSupabase(supabase.from('product').select('*').eq('id', id).single()),
+});
+
+export const useAddProduct = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newProduct) => fromSupabase(supabase.from('product').insert([newProduct])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('products');
+        },
+    });
+};
+
+export const useUpdateProduct = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedProduct) => fromSupabase(supabase.from('product').update(updatedProduct).eq('id', updatedProduct.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('products');
+        },
+    });
+};
+
+export const useDeleteProduct = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('product').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('products');
+        },
+    });
+};
+
+// Hooks for order table
+export const useOrders = () => useQuery({
+    queryKey: ['orders'],
+    queryFn: () => fromSupabase(supabase.from('order').select('*')),
+});
+
+export const useOrder = (id) => useQuery({
+    queryKey: ['order', id],
+    queryFn: () => fromSupabase(supabase.from('order').select('*').eq('id', id).single()),
+});
+
+export const useAddOrder = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newOrder) => fromSupabase(supabase.from('order').insert([newOrder])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('orders');
+        },
+    });
+};
+
+export const useUpdateOrder = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedOrder) => fromSupabase(supabase.from('order').update(updatedOrder).eq('id', updatedOrder.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('orders');
+        },
+    });
+};
+
+export const useDeleteOrder = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('order').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('orders');
         },
     });
 };
