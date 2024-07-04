@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Home, BookOpen, Tool, Globe, Newspaper, User } from "lucide-react"; // Changed Tools to Tool
+import { Home, BookOpen, Wrench, Globe, Newspaper, User } from "lucide-react"; // Changed Tool to Wrench
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Layout from "./layouts/sidebar"; // Change to sidebar layout
 import Index from "./pages/Index.jsx";
@@ -27,7 +27,7 @@ export const navItems = [
   {
     title: "Design Tools",
     to: "/design-tools",
-    icon: <Tool className="h-4 w-4" />, // Changed Tools to Tool
+    icon: <Wrench className="h-4 w-4" />, // Changed Tool to Wrench
   },
   {
     title: "Regional Adaptation Tools",
